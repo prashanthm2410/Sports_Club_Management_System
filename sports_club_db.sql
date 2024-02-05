@@ -58,7 +58,7 @@ CREATE TABLE `users`(
 `mobile` varchar(20),
 `email` varchar(20) UNIQUE,
 `dob` varchar(10),
-`joining_date` varchar(10),
+`joining_date` varchar(10)
 );
 
 -- ----------------------------
