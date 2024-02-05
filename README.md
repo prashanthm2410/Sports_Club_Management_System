@@ -28,4 +28,4 @@ Import database (sports_club_db.sql) from downloaded folder
 The sql file(sports_club_db.sql) will now be saved into "C:\xampp\mysql\data"
 
 
-Open Your browser put inside "http://localhost/Sports-Club-Management-System/"
+Open Your browser put inside "http://localhost/Sports_Club_Management_System/" or "http://localhost/Sports_Club_Management_System-main/" 
