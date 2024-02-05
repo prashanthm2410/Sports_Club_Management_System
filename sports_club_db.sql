@@ -39,7 +39,7 @@ INSERT INTO `admin` VALUES ('admin2', 'admin2', 'admin2', 'Deputy Manager');
 -- ----------------------------
 DROP TABLE IF EXISTS `log_users`;
 CREATE TABLE `log_users` (
-`id` int(10),
+`id` int(11) NOT NULL,
 `users_userid` int(11) NOT NULL,
 `action` varchar(20) NOT NULL,
 `cdate` datetime NOT NULL
@@ -52,14 +52,17 @@ CREATE TABLE `log_users` (
 -- ----------------------------
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users`(
-`userid` char(10) PRIMARY KEY,
+`userid` varchar(20),
 `username` varchar(40),
 `gender` varchar(8),
 `mobile` varchar(20),
-`email` varchar(20) UNIQUE,
+`email` varchar(20),
 `dob` varchar(10),
-`joining_date` varchar(10)
-);
+`joining_date` varchar(10),
+PRIMARY KEY (`userid`) USING BTREE,
+UNIQUE INDEX `email`(`email`) USING BTREE,
+INDEX `userid`(`userid`) USING BTREE
+)ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of users
@@ -124,17 +127,17 @@ INSERT INTO `plan` VALUES ('BOQKJB', 'Badminton Plan', 'A monthly subscription t
 -- ----------------------------
 DROP TABLE IF EXISTS `enrolls_to`;
 CREATE TABLE `enrolls_to` (
-`et_id` int(5) AUTO_INCREMENT,
+`et_id` int(5) NOT NULL AUTO_INCREMENT,
 `pid` varchar(8) ,
-`uid` char(10),
+`uid` varchar(20),
 `paid_date` varchar(15),
 `expire` varchar(15),
 `renewal` varchar(15),
 PRIMARY KEY (`et_id`) USING BTREE,
 INDEX `user_ID`(`uid`) USING BTREE,
 INDEX `plan_ID_idx`(`pid`) USING BTREE,
-CONSTRAINT `plan_ID` FOREIGN KEY (`pid`) REFERENCES `plan` (`pid`),
-CONSTRAINT `user_ID` FOREIGN KEY (`uid`) REFERENCES `users` (`userid`)
+CONSTRAINT `plan_ID` FOREIGN KEY (`pid`) REFERENCES `plan` (`pid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+CONSTRAINT `user_ID` FOREIGN KEY (`uid`) REFERENCES `users` (`userid`) ON DELETE CASCADE ON UPDATE NO ACTION
 )ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
