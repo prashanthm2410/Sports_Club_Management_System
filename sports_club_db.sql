@@ -39,30 +39,43 @@ INSERT INTO `admin` VALUES ('admin2', 'admin2', 'admin2', 'Deputy Manager');
 -- ----------------------------
 DROP TABLE IF EXISTS `log_users`;
 CREATE TABLE `log_users` (
-`id` int(11) NOT NULL,
-`users_userid` int(11) NOT NULL,
-`action` varchar(20) NOT NULL,
-`cdate` datetime NOT NULL
+`id` int(11),
+`users_userid` int(11) ,
+`action` varchar(20) ,
+`cdate` datetime 
 )ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 
-
--- ----------------------------
--- Table structure for users
--- ----------------------------
+-- Modify the users table
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users`(
 `userid` varchar(20),
 `username` varchar(40),
 `gender` varchar(8),
-`mobile` varchar(20),
-`email` varchar(20),
-`dob` varchar(10),
-`joining_date` varchar(10),
+`mobile` varchar(20) DEFAULT NULL,
+`email` varchar(20) DEFAULT NULL,
+`dob` varchar(10) DEFAULT NULL,
+`joining_date` varchar(10) DEFAULT NULL,
 PRIMARY KEY (`userid`) USING BTREE,
 UNIQUE INDEX `email`(`email`) USING BTREE,
 INDEX `userid`(`userid`) USING BTREE
 )ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+
+-- Modify the health_status table
+DROP TABLE IF EXISTS `health_status`;
+CREATE TABLE `health_status` (
+`hid` int(5) NOT NULL AUTO_INCREMENT,
+`calorie` varchar(8) DEFAULT NULL,
+`height` varchar(8) DEFAULT NULL,
+`weight` varchar(8) DEFAULT NULL,
+`fat` varchar(8) DEFAULT NULL,
+`remarks` varchar(200) DEFAULT NULL,
+`uid` varchar(20),
+PRIMARY KEY (`hid`) USING BTREE,
+INDEX `userID_idx`(`uid`) USING BTREE,
+CONSTRAINT `uID` FOREIGN KEY (`uid`) REFERENCES `users` (`userid`) ON DELETE CASCADE ON UPDATE NO ACTION
+)ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+
 
 -- ----------------------------
 -- Records of users
@@ -70,23 +83,6 @@ INDEX `userid`(`userid`) USING BTREE
 INSERT INTO `users` VALUES ('1529336794', 'Christiana Mayberry', 'Male', '3362013747', 'christiani@gmail.com', '1968-04-13', '2018-06-18');
 INSERT INTO `users` VALUES ('1529336795', 'Shreyansh Gupta', 'Male', '3362013747', 'shreyansh@gmail.com', '1998-12-12', '2020-06-10');
 
-
--- ----------------------------
--- Table structure for health_status
--- ----------------------------
-DROP TABLE IF EXISTS `health_status`;
-CREATE TABLE `health_status` (
-`hid` int(5) NOT NULL AUTO_INCREMENT,
-`calorie` varchar(8),
-`height` varchar(8),
-`weight` varchar(8),
-`fat` varchar(8),
-`remarks` varchar(200),
-`uid` varchar(20),
-PRIMARY KEY (`hid`) USING BTREE,
-INDEX `userID_idx`(`uid`) USING BTREE,
-CONSTRAINT `uID` FOREIGN KEY (`uid`) REFERENCES `users` (`userid`) ON DELETE CASCADE ON UPDATE NO ACTION
-)ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 
 -- ----------------------------
